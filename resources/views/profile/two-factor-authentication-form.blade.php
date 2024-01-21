@@ -50,9 +50,7 @@
 
                 @if ($showingConfirmation)
                     <div class="mt-4">
-                        <x-label for="code" value="{{ __('Code') }}" />
-
-                        <x-input id="code" type="text" name="code" class="block mt-1 w-1/2" inputmode="numeric" autofocus autocomplete="one-time-code"
+                        <x-input label="Code" id="code" type="text" name="code" class="block mt-1 w-1/2" inputmode="numeric" autofocus autocomplete="one-time-code"
                             wire:model="code"
                             wire:keydown.enter="confirmTwoFactorAuthentication" />
 

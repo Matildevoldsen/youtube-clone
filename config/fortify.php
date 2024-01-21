@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
 
 return [
@@ -45,9 +46,9 @@ return [
     |
     */
 
-    'username' => 'email',
+    'username' => 'identity',
 
-    'email' => 'email',
+    'email' => 'identity',
 
     /*
     |--------------------------------------------------------------------------
@@ -146,7 +147,7 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([

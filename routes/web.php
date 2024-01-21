@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/trending', HomeController::class)->name('trending');
 
 Route::middleware([
     'auth:sanctum',
