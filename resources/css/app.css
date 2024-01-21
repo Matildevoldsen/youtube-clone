@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body, html {
+    @apply bg-slate-50;
+}
+
 [x-cloak] {
     display: none;
 }
