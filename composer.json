@@ -9,11 +9,14 @@
         "davidhsianturi/blade-bootstrap-icons": "^1.4",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
+        "laravel/horizon": "^5.22",
         "laravel/jetstream": "^4.2",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.3",
         "owenvoke/blade-fontawesome": "^2.5",
+        "pbmedia/laravel-ffmpeg": "^8.4",
+        "pion/laravel-chunk-upload": "^1.5",
         "robsontenorio/mary": "^1.19"
     },
     "require-dev": {
