@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Jobs\EncodeVideo;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -45,10 +46,12 @@ class UploadVideo extends Component
 
         $this->video = auth()->user()->videos()->create([
             'title' => $file->getClientOriginalName(),
-            'original_file_path' => $file->storeAs('videos', Str::uuid() . '.mp4')
+            'original_file_path' => $file->storeAs('videos', Str::uuid() . '.mp4', [
+                'disk' => 'public'
+            ])
         ]);
 
-
+        EncodeVideo::dispatch($this->video);
     }
 
     public function render()

@@ -26,6 +26,10 @@
 
                 $wire.call('handleSuccess', file.name, JSON.parse(response.detail.response.body).file)
             })
+
+            this.uploader.on('progress', (progress) => {
+                this.progress = progress.detail
+            })
         }
     }">
         <div>
@@ -37,5 +41,10 @@
                 <input type="file" x-on:change.prevent="submit" x-ref="file" class="hidden" id="video"
             </label>
         </div>
+        <template x-if="uploader">
+            <div class="space-y-1">
+                <x-progress x-bind:value="progress" max="100"/>
+            </div>
+        </template>
     </form>
 </x-modal>
