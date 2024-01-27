@@ -30,10 +30,16 @@
             this.uploader.on('progress', (progress) => {
                 this.progress = progress.detail
             })
+
+            this.uploader.on('success', () => {
+                this.uploader = null
+                this.progress = 100
+            })
         }
     }">
         <div>
-            <label class="flex w-full h-40 border-2 border-gray-400 border-dashed justify-center items-center"
+            <label x-show="progress === 0"
+                   class="flex w-full h-40 border-2 border-gray-400 border-dashed justify-center items-center"
                    for="video">
                 <span>
                     <x-icon name="fas.upload" label="Upload Video"/>
@@ -47,4 +53,13 @@
             </div>
         </template>
     </form>
+    @if ($uploaded)
+        <x-form wire:submit="updateVideo">
+            <div class="space-y-2">
+                <x-input label="Title" wire:model="form.title"/>
+                <x-textarea hint="Max 1000 characters" label="Description" wire:model="form.description"/>
+                <x-tags id="tags" label="Tags" wire:model="form.tags"/>
+            </div>
+        </x-form>
+    @endif
 </x-modal>

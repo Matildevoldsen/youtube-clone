@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Jobs\EncodeVideo;
+use App\Livewire\Forms\UploadVideoForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
@@ -14,6 +15,8 @@ use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 class UploadVideo extends Component
 {
     public bool $modal = false;
+    public UploadVideoForm $form;
+    public bool $uploaded = false;
 
     #[On('toggleModal')]
     public function toggleModal()
@@ -51,11 +54,18 @@ class UploadVideo extends Component
             ])
         ]);
 
+        $this->uploaded = true;
+
         EncodeVideo::dispatch($this->video);
     }
 
     public function render()
     {
         return view('livewire.upload-video');
+    }
+
+    public function updateVideo()
+    {
+
     }
 }

@@ -9,3 +9,10 @@ body, html {
 [x-cloak] {
     display: none;
 }
+
+#tags input, #tags input:focus, #tags input:active {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    outline-offset: 0;
+}
