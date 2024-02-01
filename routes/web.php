@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Livewire\UploadVideo;
+use App\Livewire\VideoPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/trending', HomeController::class)->name('trending');
+Route::get('/videos/{video:uuid}', VideoPage::class)->name('video.show');
 
 Route::middleware([
     'auth:sanctum',

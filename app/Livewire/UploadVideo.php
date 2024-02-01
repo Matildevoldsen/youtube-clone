@@ -3,20 +3,27 @@
 namespace App\Livewire;
 
 use App\Jobs\EncodeVideo;
+use App\Jobs\GenerateThumbnail;
 use App\Livewire\Forms\UploadVideoForm;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Mary\Traits\Toast;
 use Pion\Laravel\ChunkUpload\Handler\ContentRangeUploadHandler;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class UploadVideo extends Component
 {
+    use WithFileUploads;
+    use Toast;
     public bool $modal = false;
     public UploadVideoForm $form;
     public bool $uploaded = false;
+    public Video $video;
 
     #[On('toggleModal')]
     public function toggleModal()
@@ -57,6 +64,7 @@ class UploadVideo extends Component
         $this->uploaded = true;
 
         EncodeVideo::dispatch($this->video);
+        GenerateThumbnail::dispatch($this->video);
     }
 
     public function render()
@@ -66,6 +74,28 @@ class UploadVideo extends Component
 
     public function updateVideo()
     {
+        $this->form->validate();
 
+        $thumbnail = $this->form->thumbnail_path->storeAs('thumbnails',
+            Str::uuid() . '.' . $this->form->thumbnail_path->getClientOriginalExtension(),
+            ['disk' => 'public']
+        );
+
+        $this->video->update([
+            'title' => $this->form->title,
+            'thumbnail_path' => $thumbnail,
+            'description' => $this->form->description,
+            'tags' => $this->form->tags,
+            'live_at' => $this->form->live_at,
+        ]);
+
+        $this->modal = false;
+        $this->toast(
+            title: 'Video Uploaded',
+            description: 'Your video has successfully uploaded!',
+            type: 'success'
+        );
+
+        $this->redirect(route('home'));
     }
 }

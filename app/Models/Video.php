@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Video extends Model
 {
@@ -14,8 +15,20 @@ class Video extends Model
     protected $fillable = [
         'title',
         'description',
-        'original_file_path'
+        'thumbnail_path',
+        'original_file_path',
+        'live_at',
+        'tags'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($video) {
+            $video->uuid = (string) Str::uuid();
+        });
+    }
 
     public function user(): BelongsTo
     {

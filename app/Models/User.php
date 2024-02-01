@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -66,5 +67,25 @@ class User extends Authenticatable
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function likes(): MorphMany
+    {
+        return $this->morphMany(Like::class, 'likeable')->where('type', 'like');
+    }
+
+    public function dislikes(): MorphMany
+    {
+        return $this->morphMany(Like::class, 'likeable')->where('type', 'dislike');
+    }
+
+    public function likeModel(): MorphMany
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    public function updateLikeStatus(): void
+    {
+
     }
 }
