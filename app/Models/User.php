@@ -69,23 +69,10 @@ class User extends Authenticatable
         return $this->hasMany(Video::class);
     }
 
-    public function likes(): MorphMany
+    public function totalViews(): int
     {
-        return $this->morphMany(Like::class, 'likeable')->where('type', 'like');
-    }
-
-    public function dislikes(): MorphMany
-    {
-        return $this->morphMany(Like::class, 'likeable')->where('type', 'dislike');
-    }
-
-    public function likeModel(): MorphMany
-    {
-        return $this->morphMany(Like::class, 'likeable');
-    }
-
-    public function updateLikeStatus(): void
-    {
-
+        return $this->videos->sum(function ($video) {
+            return views($video)->count();
+        });
     }
 }

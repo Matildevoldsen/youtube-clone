@@ -87,6 +87,15 @@
                             Home
                         </span>
                     </a>
+                    <a href="{{ route('trending') }}"
+                       wire:navigate
+                       {{ request()->routeIs('trending') ? 'aria-current="page"' : '' }}
+                       class="{{ request()->routeIs('trending') ? 'bg-gray-900 text-white hover:bg-gray-700' : '' }} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <x-icon name="fas.hashtag"/>
+                        <span class="flex-1 ms-3 whitespace-nowrap">
+                            Trending
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>
